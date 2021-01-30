@@ -34,45 +34,47 @@
 
     <body>
         
-        <div id = "title">Sentinel</div>
-            <nav>
-              <div class="dropdown">
-                <button><a href="#" class="home">About</a></button>
-                  <h2>Home</h2>
-                  <div class="selection">
-                    <button>Map Filter</button>
-                      <ul>
-                        <li><a href="#">Freedom Index</a></li>
-                        <li><a href="#">Poverty</a></li>
-                        <li><a href="#">Filter3</a></li>
-                        <li><a href="#">Filter4</a></li>
-                        <li><a href="#">Filter5</a></li>
-                        <li><a href="#">Filter6</a></li>
-                        <li><a href="#">Filter7</a></li>
-                        <li><a href="#">Filter8</a></li>
-                      </ul>
-                  </div>
-                  <!-- <div class="projects">
-                    <button>Second Projects</button>
-                      <ul>
-                        <li><a href="#">shit</a></li>
-                        <li><a href="#">shit</a></li>
-                        <li><a href="#">shit</a></li>
-                        <li><a href="#">shit</a></li>
-                      </ul>
-                  </div> -->
-
-
-
-              </div>
-            </nav>
+        <div id = "title">/ Sentinel /</div>
+            <div class="navbar">
+                <a href = "index.html">Home</a>
+                <a href = "#">About</a>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="myFunction()">Dropdown</button>
+                    <div class="dropdown-content" id="myDropdown">
+                        <a href="povertyindex.html">Poverty Index</a>
+                        <a href="humanfreedomindex.html">Human Freedom Index</a>
+                        <a href="#">Global Peace Index</a>
+                        <a href="#">Militarization</a>
+                        <a href="#">Global Burden of Disease</a>
+                        <a href="#">Human Development Index</a>
+                        <a href="#">Environmental Sustainability</a>
+                        <a href="#">Gender Indequality</a>
+                    </div>
+                </div>
+                <h2>Human Freedom Index</h2>
+            </div>
+            
         
         <div class = "map-wrapper">
             <div id="map" style="position: relative; margin-top: 0px; width: auto; height:auto;"></div>
         </div>
         
         
-        
+        <script>
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+
+            window.onclick = function(e) {
+                if (!e.target.matches('.dropbtn')) {
+                    var myDropdown = document.getElementById("myDropdown");
+                    if (myDropdown.classList.contains('show')) {
+                        myDropdown.classList.remove('show');
+                    }
+                }
+            }
+        </script>
 
 
         <script>
