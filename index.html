@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js">
+        </script>
+        <script src="https://datamaps.github.io/scripts/0.5.0/datamaps.world.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js">
+        </script>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css" >
+        
+        <script type="text/javascript" src="d3.v2.min.js"></script>
+
+        <script type="text/javascript">
+
+        window.onload = function() {
+            d3.csv("data.csv", function(data) {
+                //Add data to the graph and call enter.
+                var dataEnter = d3.select("body").selectAll("p").data(data).enter();
+   
+                dataEnter.append("span").html(function(d) {
+                    return d["Site Type"] + "," + d["Media Type"] + "," + d["Data 1"] + "," + d["Data 2"]
+                        + "," + d["Data 3"] + "</br>";
+                    });
+                });
+        };
+
+</script>
+
+        <script src="script.js" defer></script>
+
+    </head>
+
+    <body>
+        
+        <div id = "title">Sentinel</div>
+            <nav>
+              <div class="dropdown">
+                <button><a href="#" class="home">About</a></button>
+                  <h2>Home</h2>
+                  <div class="selection">
+                    <button>Map Filter</button>
+                      <ul>
+                        <li><a href="#">Freedom Index</a></li>
+                        <li><a href="#">Poverty</a></li>
+                        <li><a href="#">Filter3</a></li>
+                        <li><a href="#">Filter4</a></li>
+                        <li><a href="#">Filter5</a></li>
+                        <li><a href="#">Filter6</a></li>
+                        <li><a href="#">Filter7</a></li>
+                        <li><a href="#">Filter8</a></li>
+                      </ul>
+                  </div>
+                  <!-- <div class="projects">
+                    <button>Second Projects</button>
+                      <ul>
+                        <li><a href="#">shit</a></li>
+                        <li><a href="#">shit</a></li>
+                        <li><a href="#">shit</a></li>
+                        <li><a href="#">shit</a></li>
+                      </ul>
+                  </div> -->
+
+
+
+              </div>
+            </nav>
+        
+        <div class = "map-wrapper">
+            <div id="map" style="position: relative; margin-top: 0px; width: auto; height:auto;"></div>
+        </div>
+        
+        
+        
+
+
+        <script>
+            // Converts CSV -> JSON -> stored in new Firestore database and returns list of JSON objects
+            function readCSV(csvString) {
+              var db = firebase.firestore();
+              db.collection('countries').doc('placeholder');
+
+              var dataJson = Papa.parse(csv, {
+                fastMode: true,
+                header : true,
+                dynamicTyping : true,
+                skipEmptyLines : true
+              });
+
+              fieldNames = data_json.fields;  // first field is always country
+              countryName = fieldNames[0];
+              dataJson.forEach(function (obj) {
+                  delete obj[countryName];
+                  db.collection('countries').add(obj);
+              })
+
+              return db;
+            }
+
+            function valueQuery(name, feature){
+                // Not sure if db inside <body> is global or reachable here; if not, call `var db = readCSV(csvString)` first here. 
+                var countryRef = db.collection('countries').doc(name);
+                countryRef.get()
+                .then(function(doc) {
+                    return doc.data()[feature];
+                })
+                .catch(function (err) { console.log("Error: " + err); });
+                // return 10
+            }
+    }
+
+
+  });
+
+  window.addEventListener("resize", function() {
+    map.resize();
+  });
+</script>
+
+<body>
+
+  <!-- Firestore JS Library -->
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyC2VqB8gWmvD91IcLT8UGhiI-rKwJZ5RZY",
+    authDomain: "sentry-tech.firebaseapp.com",
+    projectId: "sentry-tech",
+    storageBucket: "sentry-tech.appspot.com",
+    messagingSenderId: "823119172223",
+    appId: "1:823119172223:web:1ac3b49c164b8520b1654a",
+    measurementId: "G-P1RK5V842S"
+  };
+
+  const firebase = require("firebase");
+  // Required for side-effects
+  require("firebase/firestore");
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  // Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+  apiKey: 'AIzaSyC2VqB8gWmvD91IcLT8UGhiI-rKwJZ5RZY',
+  authDomain: 'sentry-tech.firebaseapp.com',
+  projectId: 'sentry-tech'
+});
+
+  const csvString = document.getElementById(id); // read csv string
+  var db = readCSV(csvString);
+
+
+</script>
+
+</body>
