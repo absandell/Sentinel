@@ -81,20 +81,37 @@
 
         <script>
             
-            
-            function valueQuery(name){
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                return 10
+            // Converts CSV -> JSON -> stored in new Firestore database and returns list of JSON objects
+            function readCSV(csvString) {
+              var db = firebase.firestore();
+              db.collection('countries').doc('placeholder');
+
+              var dataJson = Papa.parse(csv, {
+                fastMode: true,
+                header : true,
+                dynamicTyping : true,
+                skipEmptyLines : true
+              });
+
+              fieldNames = data_json.fields;  // first field is always country
+              countryName = fieldNames[0];
+              dataJson.forEach(function (obj) {
+                  delete obj[countryName];
+                  db.collection('countries').add(obj);
+              })
+
+              return db;
+            }
+
+            function valueQuery(name, feature){
+                // Not sure if db inside <body> is global or reachable here; if not, call `var db = readCSV(csvString)` first here. 
+                var countryRef = db.collection('countries').doc(name);
+                countryRef.get()
+                .then(function(doc) {
+                    return doc.data()[feature];
+                })
+                .catch(function (err) { console.log("Error: " + err); });
+                // return 10
             }
             
             function getColor(name) {
@@ -134,9 +151,6 @@
                         return "defaultFill"
                         break;   
                 }
-                
-                
-                
                 
                 
             }
@@ -350,7 +364,7 @@
         });
         </script>
         
-                <!-- Firestore JS Library -->
+                        <!-- Firestore JS Library -->
         <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
 
           <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -388,7 +402,9 @@
           projectId: 'sentry-tech'
         });
 
-          var db = firebase.firestore();
+          const csvString = document.getElementById(id); // read csv string
+          var db = readCSV(csvString);
+
 
         </script>
     </body>
