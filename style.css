@@ -7,10 +7,10 @@
   margin: 0;
   padding: 0;
   background-size: cover;
-  background-position: center center;
+  
   height: 100vh;
   background-repeat: no-repeat;
-  font-family: lato;
+  font-family: 'Abel', sans-serif;
 } 
 
 .dropdown {
@@ -54,7 +54,7 @@
   border: none;
   color: rgb(0, 0, 0);
   text-decoration: none;
-  font-size: 50px;
+  font-size: 30px;
   cursor: pointer;
 }
 
@@ -95,6 +95,14 @@ h1{
     text-align:center;
     font-size:90px;
     font-weight: 200;
+}
+
+h2{
+    font-family: 'Abel', sans-serif;
+    color:rgb(16, 199, 132);
+    text-align:center;
+    font-size:40px;
+    
 }
 
 
@@ -176,14 +184,15 @@ h1{
 }
 
 #title{
+    text-align: center;
+    margin-left: 30%;
+    margin-right: 30%;
     background-color:rgb(16, 199, 132);
     padding-bottom: 10px;
     border-radius:30px;
     padding-top:10px;
-    margin-left:40%;
-    margin-right:40%;
+    
     color:rgb(0, 0, 0);
-    text-align:center;
     content: "Sentinel";
     font-family: 'Abel', sans-serif;
     font-size: 70px;
