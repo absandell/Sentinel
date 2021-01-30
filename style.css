@@ -3,6 +3,84 @@
     padding:0;
 }
 
+ body {
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
+  background-repeat: no-repeat;
+  font-family: lato;
+} 
+
+.dropdown {
+  height: 40vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width:80%;
+  margin: auto;
+}
+
+.selection {
+  position: relative;
+}
+
+.selection ul {
+  position: absolute;
+  /* background: rgb(16, 199, 132); */
+  margin-top: 10px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  list-style: none;
+  border-radius: 35px; 
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
+}
+.dropdown button, .home{
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.selection li {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selection li:hover {
+  background-color: rgb(16, 199, 132);
+}
+
+.dropdown button:hover, .home:hover{
+  color: #999;
+} 
+
+
+ .selection a {
+  color: black;
+  text-decoration: none;
+} 
+
+.selection button:focus + ul {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0px);
+}
+
+
 h1{
     font-family: 'Abel', sans-serif;
     background-color:black;
@@ -90,16 +168,17 @@ h1{
 }
 
 #title{
-    background-color:black;
+    background-color:rgb(16, 199, 132);
+    padding-bottom: 25px;
     border-radius:30px;
     padding-top:20px;
     margin-left:40%;
     margin-right:40%;
-    color:skyblue;
+    color:rgb(0, 0, 0);
     text-align:center;
     content: "Sentinel";
     font-family: 'Abel', sans-serif;
-    font-size: 60px;
+    font-size: 70px;
     font-weight: 100;
     font-style: normal;
 }
