@@ -10,8 +10,40 @@
             <div class="navbar">
                 <a href = "index.html">Home</a>
                 <a href = "about.html">About</a>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="myFunction()">Dropdown</button>
+                    <div class="dropdown-content" id="myDropdown">
+                        <a href="povertyindex.html">Poverty Index</a>
+                        <a href="humanfreedomindex.html">Human Freedom Index</a>
+                        <a href="globalpeaceindex.html">Global Peace Index</a>
+                        <a href="militarizationindex.html">Militarization Index</a>
+                        <a href="diseaseindex.html">Global Burden of Disease</a>
+                        <a href="humandevelopmentindex.html">Human Development Index</a>
+                        <a href="environmenalsustainability.html">Environmental Sustainability</a>
+                        <a href="genderinequality.html">Gender Inequality</a>
+                    </div>
+                </div>
+                <input type="file" accept=".csv" onchange="uploadCSV(this)">
+                <h2>About</h2>
             </div>
-        <div class = "map-wrapper">
+        
+            <script>
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+
+            window.onclick = function(e) {
+                if (!e.target.matches('.dropbtn')) {
+                    var myDropdown = document.getElementById("myDropdown");
+                    if (myDropdown.classList.contains('show')) {
+                        myDropdown.classList.remove('show');
+                    }
+                }
+            }
+        </script>
+        
+            <div class = "map-wrapper">
             <div class="box">
                 About This Project
             </div>
@@ -19,7 +51,6 @@
                 <div>Sentinel allows people to understand some of the major humanitarian issues that are going on around the world. Each filter found in the dropdown menu gives a visual representation of data for a specific societal issue, backed by data found in public databases. This website helps people better choose where they dedicate time, resources, and energy in order to help people around the world.</div>
                 </div>
             </div>
-        </div>
     </body>
 </html>
 
