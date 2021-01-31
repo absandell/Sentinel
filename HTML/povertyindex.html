@@ -111,30 +111,6 @@
 
 
         <script>
-            
-            
-            // Converts CSV -> JSON -> stored in new Firestore database and returns list of JSON objects
-            function readCSV(csvString) {
-              var db = firebase.firestore();
-              db.collection('countries').doc('placeholder');
-
-              var dataJson = Papa.parse(csv, {
-                fastMode: true,
-                header : true,
-                dynamicTyping : true,
-                skipEmptyLines : true
-              });
-
-              fieldNames = data_json.fields;  // first field is always country
-              countryName = fieldNames[0];
-              dataJson.forEach(function (obj) {
-                  delete obj[countryName];
-                  db.collection('countries').add(obj);
-              })
-
-              return db;
-            }
-            
             function getColor(val) {
                 switch(val) {
                     case 0:
@@ -172,13 +148,12 @@
                         break;
                     default:
                         return "defaultFill"
-                        break;   
+                        break;
                 }
-                
-            }
-            
 
-          var map = new Datamap({
+            }
+          
+        var map = new Datamap({
             element: document.getElementById("map"),
             responsive: true,
             fills: {

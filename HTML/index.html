@@ -93,7 +93,6 @@
                         <a href="genderinequality.html">Gender Inequality</a>
                     </div>
                 </div>
-                <input type="file" accept=".csv" onchange="uploadCSV(this)">
                 <h2>Home</h2>
             </div>
 
@@ -124,123 +123,12 @@
 
 
         <script>
-            // Important global variables
-            var reader;  // FileReader
-            const db = firebase.firestore();  // Firestore database
-
-            /**
-            * Imports a .csv file into the
-            * @summary If the description is long, write your summary here. Otherwise, feel free to remove this.
-            * @param {ParamDataTypeHere} parameterNameHere - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
-            * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
-            */
-            function readCSV(csvString) {
-                db.collection('countries').doc('placeholder');
-
-                var dataJson = Papa.parse(csv, {
-                    fastMode: true,
-                    header : true,
-                    dynamicTyping : true,
-                    skipEmptyLines : true
-                });
-
-                fieldNames = data_json.fields;  // first field is always country
-                countryName = fieldNames[0];
-                dataJson.forEach(function (obj) {
-                    delete obj[countryName];
-                    db.collection('countries').doc(countryName).set(obj);
-                });
-            }
-
-            /**
-            * Event handler when user uploads a new file
-            * @param {filePath} FileList - List of File objects returned by the file-type input element; only the first element (File) will be used.
-            * @return {null}
-            */
-            function uploadCSV(filePath) {
-                // Check for necessary API compatilibilty
-                if(window.File && window.FileReader && window.FileList && window.Blob) { 
-                    console.log('All neceaary APIs are supported for file reading.');
-                } else {
-                    throw new Error('Not all nnecessary APIs for file reading are present.'); 
-                }
-
-                // if(filePath.files && filePath[0])
-                reader = new FileReader();
-
-                var firstFile = filePath.files[0];
-                alert("file name: " + firstFile.name);
-                alert("file type: " + firstFile.type);
-                reader.readAsText(firstFile, 'UTF-8');
-
-                reader.onload = function (event) {
-                    const csvString = event.target.result;
-                    alert('csv as string:\n\n' + csvString);
-                    // db = readCSV(csvString);
-                    // alert('db type: ' + typeof(db));
-
-                    // DEBUGGING DATABASE
-                    // adding default collection for testing purposes
-
-                    alert("Database: " + db);
-                    alert('db type: ' + typeof(db));
-                    var hackathonRef = db.collection('hackathon');
-                    alert(hackathonRef);
-                    alert(typeof(hackathonRef));
-
-                    hackathonRef.doc('sentry').set({
-                        contests : ['Google', 'Citi Bank'],
-                        type : 'interactive website',
-                        teamSize : 4
-                    });
-
-                    alert('Set a new document to collection.');
-
-                    hackathonRef.doc('sentry').get()
-                    .then(function (doc) {
-                        if(doc.exists) {
-                            alert('db test data:\n\n' + doc.data());
-                        } else {
-                            alert('Error: no such document!');
-                        }
-                    })
-                    .catch(function (err) {
-                        alert('Error getting document: ' + err);
-                    });
-                }
-            }
-
-            /**
-            * Gets numerical value for a specified country under a specific feature (CSV column)
-            * @param {name} string - Name of country.
-            * @param {feature} string - Name of feature, which must exactly match one of the column names in current CSV file.
-            * @return {float} Retrieved numerical value from Firestore database, which is based off current CSV file. 
-            */
-            function valueQuery(name, feature){
-                // Not sure if db inside <body> is global or reachable here; if not, call `var db = readCSV(csvString)` first here. 
-                var countryRef = db.collection('countries').doc(name);
-                countryRef.get()
-                .then(function(doc) {
-                    if(doc.exists) {
-                        var data = doc.data();  // JSON object for choosen country
-                        alert('db test data:\n\n' + data);
-                        return data[feature];
-                    } else {
-                        alert('Error: no such document!');
-                    }
-                })
-                .catch(function (err) { console.log("Error: " + err); });
-                // return 10
-            }
-
-            /**
-            * Converts integer to lowercase English word version, which is then used for map coloring configurations.
-            * @param {name} string - Name of country.
-            * @return {string} Lowercase English word equivalent of integer.
-            */
-            function getColor(name) {
-                var geoVal = valueQuery(name);
-                switch(geoVal) {
+     
+            function getColor(val) {
+                switch(val) {
+                    case 0:
+                        return "zero"
+                        break;
                     case 1:
                         return "one"
                         break;
@@ -277,13 +165,13 @@
                 }
 
             }
-            var temp = "test"
-
+          
         var map = new Datamap({
             element: document.getElementById("map"),
             responsive: true,
             fills: {
                 defaultFill: "grey",
+                zero:"#fffff1",
                 one:"#fff5cc",
                 two:"#ffeb99",
                 three:"#ffdb4d",
@@ -501,7 +389,7 @@
             geographyConfig: {
                 popupTemplate: function(geo, data) {
                     return ['<div class="hoverinfo"><strong>',
-                            'Number of things in ' + geo.properties.name,
+                            'Crisis Severity in ' + geo.properties.name,
                             ': ' + data.value,
                             '</strong></div>'].join('');
                     }

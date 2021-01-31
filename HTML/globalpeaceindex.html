@@ -15,18 +15,7 @@
 
         <script type="text/javascript">
 
-        window.onload = function() {
-            d3.csv("data.csv", function(data) {
-                //Add data to the graph and call enter.
-                var dataEnter = d3.select("body").selectAll("p").data(data).enter();
-   
-                dataEnter.append("span").html(function(d) {
-                    return d["Site Type"] + "," + d["Media Type"] + "," + d["Data 1"] + "," + d["Data 2"]
-                        + "," + d["Data 3"] + "</br>";
-                    });
-                });
-        };
-
+        
 </script>
 
         <script src="/script.js" defer></script>
@@ -127,44 +116,11 @@
 
 
         <script>
-            
-            
-            // Converts CSV -> JSON -> stored in new Firestore database and returns list of JSON objects
-            function readCSV(csvString) {
-              var db = firebase.firestore();
-              db.collection('countries').doc('placeholder');
-
-              var dataJson = Papa.parse(csv, {
-                fastMode: true,
-                header : true,
-                dynamicTyping : true,
-                skipEmptyLines : true
-              });
-
-              fieldNames = data_json.fields;  // first field is always country
-              countryName = fieldNames[0];
-              dataJson.forEach(function (obj) {
-                  delete obj[countryName];
-                  db.collection('countries').add(obj);
-              })
-
-              return db;
-            }
-
-            function valueQuery(name, feature){
-                // Not sure if db inside <body> is global or reachable here; if not, call `var db = readCSV(csvString)` first here. 
-                var countryRef = db.collection('countries').doc(name);
-                countryRef.get()
-                .then(function(doc) {
-                    return doc.data()[feature];
-                })
-                .catch(function (err) { console.log("Error: " + err); });
-                // return 10
-            }
-            
-            function getColor(name) {
-                var geoVal = valueQuery(name);
-                switch(geoVal) {
+            function getColor(val) {
+                switch(val) {
+                    case 0:
+                        return "zero"
+                        break;
                     case 1:
                         return "one"
                         break;
@@ -197,20 +153,17 @@
                         break;
                     default:
                         return "defaultFill"
-                        break;   
+                        break;
                 }
-                
-                
-                
-                
-                
-            }
 
-          var map = new Datamap({
+            }
+          
+        var map = new Datamap({
             element: document.getElementById("map"),
             responsive: true,
             fills: {
                 defaultFill: "grey",
+                zero:"#fffff1",
                 one:"#fff5cc",
                 two:"#ffeb99",
                 three:"#ffdb4d",
@@ -221,8 +174,8 @@
                 eight:"#b32400",
                 nine:"#661400",
                 ten:"#330a00"
-                            },
-                            data: {
+            },
+            data: {
                 AFG: { fillKey: getColor(10), value: 3.644},
                 ALA: { fillKey: getColor(-1), value: "unknown"},
                 ALB: { fillKey: getColor(3), value: 1.872},
