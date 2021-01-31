@@ -171,6 +171,23 @@ h2{
     animation-timing-function: linear;
 }
 
+.learnmore{
+    text-align:center;
+    background-color: #333;
+    
+}
+
+.learnmore a{
+    font-size: 70px;
+    text-decoration:none;
+    font-family: 'Abel', sans-serif;
+    color: rgb(16, 199, 132)
+}
+
+.learnmore a:hover{
+    color:lightgrey;
+}
+
 #title{
     text-align: center;
     margin-left: 30%;
