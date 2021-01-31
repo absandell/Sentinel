@@ -1,0 +1,25 @@
+[debug] [2021-01-30T07:45:59.029Z] ----------------------------------------------------------------------
+[debug] [2021-01-30T07:45:59.030Z] Command:       /usr/bin/node /mnt/c/Users/qcaij/AppData/Roaming/npm/node_modules/firebase-tools/lib/bin/firebase.js init
+[debug] [2021-01-30T07:45:59.031Z] CLI Version:   9.2.2
+[debug] [2021-01-30T07:45:59.031Z] Platform:      linux
+[debug] [2021-01-30T07:45:59.031Z] Node Version:  v10.19.0
+[debug] [2021-01-30T07:45:59.032Z] Time:          Sat Jan 30 2021 02:45:59 GMT-0500 (Eastern Standard Time)
+[debug] [2021-01-30T07:45:59.032Z] ----------------------------------------------------------------------
+[debug] [2021-01-30T07:45:59.032Z] 
+[debug] [2021-01-30T07:45:59.038Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-01-30T07:45:59.038Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /mnt/d/DESKTOP-1S7D2TD/qcaij/Desktop/SwampHacks/sentry
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+
