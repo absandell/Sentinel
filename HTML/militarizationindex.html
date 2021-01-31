@@ -6,6 +6,7 @@
         </script>
         <script src="https://datamaps.github.io/scripts/0.5.0/datamaps.world.min.js">
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css" >
@@ -28,7 +29,51 @@
 
 </script>
 
-        <script src="script.js" defer></script>
+        <script src="/script.js" defer></script>
+        
+                       <!-- Firestore JS Library -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+
+          <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
+
+        <script>
+          // Your web app's Firebase configuration
+          // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+          var firebaseConfig = {
+            apiKey: "AIzaSyC2VqB8gWmvD91IcLT8UGhiI-rKwJZ5RZY",
+            authDomain: "sentry-tech.firebaseapp.com",
+            projectId: "sentry-tech",
+            storageBucket: "sentry-tech.appspot.com",
+            messagingSenderId: "823119172223",
+            appId: "1:823119172223:web:1ac3b49c164b8520b1654a",
+            measurementId: "G-P1RK5V842S"
+          };
+
+          const firebase = require("firebase");
+          // Required for side-effects
+          require("firebase/firestore");
+
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+          firebase.analytics();
+
+          // Initialize Cloud Firestore through Firebase
+        firebase.initializeApp({
+          apiKey: 'AIzaSyC2VqB8gWmvD91IcLT8UGhiI-rKwJZ5RZY',
+          authDomain: 'sentry-tech.firebaseapp.com',
+          projectId: 'sentry-tech'
+        });
+
+          const csvString = document.getElementById(id); // read csv string
+          var db = readCSV(csvString);
+
+
+        </script>
 
     </head>
 
@@ -59,6 +104,9 @@
             <div id="map" style="position: relative; margin-top: 0px; width: auto; height:auto;"></div>
         </div>
         
+        <div class = "learnmore">
+            <a href = "https://www.charitynavigator.org/index.cfm?bay=search.map">Want to Learn How to Help? Start Your Search Here!</a>
+        </div>
         
         <script>
             function myFunction() {
@@ -80,19 +128,37 @@
         <script>
             
             
-            function valueQuery(name){
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                return 10
+            // Converts CSV -> JSON -> stored in new Firestore database and returns list of JSON objects
+            function readCSV(csvString) {
+              var db = firebase.firestore();
+              db.collection('countries').doc('placeholder');
+
+              var dataJson = Papa.parse(csv, {
+                fastMode: true,
+                header : true,
+                dynamicTyping : true,
+                skipEmptyLines : true
+              });
+
+              fieldNames = data_json.fields;  // first field is always country
+              countryName = fieldNames[0];
+              dataJson.forEach(function (obj) {
+                  delete obj[countryName];
+                  db.collection('countries').add(obj);
+              })
+
+              return db;
+            }
+
+            function valueQuery(name, feature){
+                // Not sure if db inside <body> is global or reachable here; if not, call `var db = readCSV(csvString)` first here. 
+                var countryRef = db.collection('countries').doc(name);
+                countryRef.get()
+                .then(function(doc) {
+                    return doc.data()[feature];
+                })
+                .catch(function (err) { console.log("Error: " + err); });
+                // return 10
             }
             
             function getColor(name) {
@@ -156,180 +222,180 @@
                 ten:"#330a00"
             },
             data: {
-                AFG: { fillKey: getColor("AFG"), value: valueQuery("AFG")},
-                AGO: { fillKey: getColor("AGO"), value: valueQuery("AGO")},
-                ALB: { fillKey: getColor("ALB"), value: valueQuery("ALB")},
-                ARE: { fillKey: getColor("ARE"), value: valueQuery("ARE")},
-                ARG: { fillKey: getColor("ARG"), value: valueQuery("ARG")},
-                ARM: { fillKey: getColor("ARM"), value: valueQuery("ARM")},
-                ATA: { fillKey: getColor("ATA"), value: valueQuery("ATA")},
-                AUS: { fillKey: getColor("AUS"), value: valueQuery("AUS")},
-                AUT: { fillKey: getColor("AUT"), value: valueQuery("AUT")},
-                AZE: { fillKey: getColor("AZE"), value: valueQuery("AZE")},
-                BDI: { fillKey: getColor("BDI"), value: valueQuery("BDI")},
-                BEL: { fillKey: getColor("BEL"), value: valueQuery("BEL")},
-                BEN: { fillKey: getColor("BEN"), value: valueQuery("BEN")},
-                BFA: { fillKey: getColor("BFA"), value: valueQuery("BFA")},
-                BGD: { fillKey: getColor("BGD"), value: valueQuery("BGD")},
-                BGR: { fillKey: getColor("BGR"), value: valueQuery("BGR")},
-                BHS: { fillKey: getColor("BHS"), value: valueQuery("BHS")},
-                BIH: { fillKey: getColor("BIH"), value: valueQuery("BIH")},
-                BLR: { fillKey: getColor("BLR"), value: valueQuery("BLR")},
-                BLZ: { fillKey: getColor("BLZ"), value: valueQuery("BLZ")},
-                BOL: { fillKey: getColor("BOL"), value: valueQuery("BOL")},
-                BRA: { fillKey: getColor("BRA"), value: valueQuery("BRA")},
-                BRN: { fillKey: getColor("BRN"), value: valueQuery("BRN")},
-                BTN: { fillKey: getColor("BTN"), value: valueQuery("BTN")},
-                BWA: { fillKey: getColor("BWA"), value: valueQuery("BWA")},
-                CAF: { fillKey: getColor("CAF"), value: valueQuery("CAF")},
-                CAN: { fillKey: getColor("CAN"), value: valueQuery("CAN")},
-                CHE: { fillKey: getColor("CHE"), value: valueQuery("CHE")},
-                CHL: { fillKey: getColor("CHL"), value: valueQuery("CHL")},
-                CHN: { fillKey: getColor("CHN"), value: valueQuery("CHN")},
-                CIV: { fillKey: getColor("CIV"), value: valueQuery("CIV")},
-                CMR: { fillKey: getColor("CMR"), value: valueQuery("CMR")},
-                COD: { fillKey: getColor("COD"), value: valueQuery("COD")},
-                COG: { fillKey: getColor("COG"), value: valueQuery("COG")},
-                COL: { fillKey: getColor("COL"), value: valueQuery("COL")},
-                CRI: { fillKey: getColor("CRI"), value: valueQuery("CRI")},
-                CUB: { fillKey: getColor("CUB"), value: valueQuery("CUB")},
-                CYP: { fillKey: getColor("CYP"), value: valueQuery("CYP")},
-                CZE: { fillKey: getColor("CZE"), value: valueQuery("CZE")},
-                DEU: { fillKey: getColor("DEU"), value: valueQuery("DEU")},
-                DJI: { fillKey: getColor("DJI"), value: valueQuery("DJI")},
-                DNK: { fillKey: getColor("DNK"), value: valueQuery("DNK")},
-                DOM: { fillKey: getColor("DOM"), value: valueQuery("DOM")},
-                DZA: { fillKey: getColor("DZA"), value: valueQuery("DZA")},
-                ECU: { fillKey: getColor("ECU"), value: valueQuery("ECU")},
-                EGY: { fillKey: getColor("EGY"), value: valueQuery("EGY")},
-                ERI: { fillKey: getColor("ERI"), value: valueQuery("ERI")},
-                ESP: { fillKey: getColor("ESP"), value: valueQuery("ESP")},
-                EST: { fillKey: getColor("EST"), value: valueQuery("EST")},
-                ETH: { fillKey: getColor("ETH"), value: valueQuery("ETH")},
-                FIN: { fillKey: getColor("FIN"), value: valueQuery("FIN")},
-                FJI: { fillKey: getColor("FJI"), value: valueQuery("FJI")},
-                FLK: { fillKey: getColor("FLK"), value: valueQuery("FLK")},
-                FRA: { fillKey: getColor("FRA"), value: valueQuery("FRA")},
-                GUF: { fillKey: getColor("GUF"), value: valueQuery("GUF")},
-                GAB: { fillKey: getColor("GAB"), value: valueQuery("GAB")},
-                GBR: { fillKey: getColor("GBR"), value: valueQuery("GBR")},
-                GEO: { fillKey: getColor("GEO"), value: valueQuery("GEO")},
-                GHA: { fillKey: getColor("GHA"), value: valueQuery("GHA")},
-                GIN: { fillKey: getColor("GIN"), value: valueQuery("GIN")},
-                GMB: { fillKey: getColor("GMB"), value: valueQuery("GMB")},
-                GNB: { fillKey: getColor("GNB"), value: valueQuery("GNB")},
-                GNQ: { fillKey: getColor("GNQ"), value: valueQuery("GNQ")},
-                GRC: { fillKey: getColor("GRC"), value: valueQuery("GRC")},
-                GRL: { fillKey: getColor("GRL"), value: valueQuery("GRL")},
-                GTM: { fillKey: getColor("GTM"), value: valueQuery("GTM")},
-                GUY: { fillKey: getColor("GUY"), value: valueQuery("GUY")},
-                HND: { fillKey: getColor("HND"), value: valueQuery("HND")},
-                HRV: { fillKey: getColor("HRV"), value: valueQuery("HRV")},
-                HTI: { fillKey: getColor("HTI"), value: valueQuery("HTI")},
-                HUN: { fillKey: getColor("HUN"), value: valueQuery("HUN")},
-                IDN: { fillKey: getColor("IDN"), value: valueQuery("IDN")},
-                IND: { fillKey: getColor("IND"), value: valueQuery("IND")},
-                IRL: { fillKey: getColor("IRL"), value: valueQuery("IRL")},
-                IRN: { fillKey: getColor("IRN"), value: valueQuery("IRN")},
-                IRQ: { fillKey: getColor("IRQ"), value: valueQuery("IRQ")},
-                ISL: { fillKey: getColor("ISL"), value: valueQuery("ISL")},
-                ISR: { fillKey: getColor("ISR"), value: valueQuery("ISR")},
-                ITA: { fillKey: getColor("ITA"), value: valueQuery("ITA")},
-                JAM: { fillKey: getColor("JAM"), value: valueQuery("JAM")},
-                JOR: { fillKey: getColor("JOR"), value: valueQuery("JOR")},
-                JPN: { fillKey: getColor("JPN"), value: valueQuery("JPN")},
-                KAZ: { fillKey: getColor("KAZ"), value: valueQuery("KAZ")},
-                KEN: { fillKey: getColor("KEN"), value: valueQuery("KEN")},
-                KGZ: { fillKey: getColor("KGZ"), value: valueQuery("KGZ")},
-                KHM: { fillKey: getColor("KHM"), value: valueQuery("KHM")},
-                KOR: { fillKey: getColor("KOR"), value: valueQuery("KOR")},
-                KWT: { fillKey: getColor("KWT"), value: valueQuery("KWT")},
-                LAO: { fillKey: getColor("LAO"), value: valueQuery("LAO")},
-                LBN: { fillKey: getColor("LBN"), value: valueQuery("LBN")},
-                LBR: { fillKey: getColor("LBR"), value: valueQuery("LBR")},
-                LBY: { fillKey: getColor("LBY"), value: valueQuery("LBY")},
-                LKA: { fillKey: getColor("LKA"), value: valueQuery("LKA")},
-                LSO: { fillKey: getColor("LSO"), value: valueQuery("LSO")},
-                LTU: { fillKey: getColor("LTU"), value: valueQuery("LTU")},
-                LUX: { fillKey: getColor("LUX"), value: valueQuery("LUX")},
-                LVA: { fillKey: getColor("LVA"), value: valueQuery("LVA")},
-                MAR: { fillKey: getColor("MAR"), value: valueQuery("MAR")},
-                MDA: { fillKey: getColor("MDA"), value: valueQuery("MDA")},
-                MDG: { fillKey: getColor("MDG"), value: valueQuery("MDG")},
-                MEX: { fillKey: getColor("MEX"), value: valueQuery("MEX")},
-                MKD: { fillKey: getColor("MKD"), value: valueQuery("MKD")},
-                MLI: { fillKey: getColor("MLI"), value: valueQuery("MLI")},
-                MMR: { fillKey: getColor("MMR"), value: valueQuery("MMR")},
-                MNE: { fillKey: getColor("MNE"), value: valueQuery("MNE")},
-                MNG: { fillKey: getColor("MNG"), value: valueQuery("MNG")},
-                MOZ: { fillKey: getColor("MOZ"), value: valueQuery("MOZ")},
-                MRT: { fillKey: getColor("MRT"), value: valueQuery("MRT")},
-                MWI: { fillKey: getColor("MWI"), value: valueQuery("MWI")},
-                MYS: { fillKey: getColor("MYS"), value: valueQuery("MYS")},
-                NAM: { fillKey: getColor("NAM"), value: valueQuery("NAM")},
-                NCL: { fillKey: getColor("NCL"), value: valueQuery("NCL")},
-                NER: { fillKey: getColor("NER"), value: valueQuery("NER")},
-                NGA: { fillKey: getColor("NGA"), value: valueQuery("NGA")},
-                NIC: { fillKey: getColor("NIC"), value: valueQuery("NIC")},
-                NLD: { fillKey: getColor("NLD"), value: valueQuery("NLD")},
-                NOR: { fillKey: getColor("NOR"), value: valueQuery("NOR")},
-                NPL: { fillKey: getColor("NPL"), value: valueQuery("NPL")},
-                NZL: { fillKey: getColor("NZL"), value: valueQuery("NZL")},
-                OMN: { fillKey: getColor("OMN"), value: valueQuery("OMN")},
-                PAK: { fillKey: getColor("PAK"), value: valueQuery("PAK")},
-                PAN: { fillKey: getColor("PAN"), value: valueQuery("PAN")},
-                PER: { fillKey: getColor("PER"), value: valueQuery("PER")},
-                PHL: { fillKey: getColor("PHL"), value: valueQuery("PHL")},
-                PNG: { fillKey: getColor("PNG"), value: valueQuery("PNG")},
-                POL: { fillKey: getColor("POL"), value: valueQuery("POL")},
-                PRI: { fillKey: getColor("PRI"), value: valueQuery("PRI")},
-                PRK: { fillKey: getColor("PRK"), value: valueQuery("PRK")},
-                PRT: { fillKey: getColor("PRT"), value: valueQuery("PRT")},
-                PRY: { fillKey: getColor("PRY"), value: valueQuery("PRY")},
-                QAT: { fillKey: getColor("QAT"), value: valueQuery("QAT")},
-                ROU: { fillKey: getColor("ROU"), value: valueQuery("ROU")},
-                RUS: { fillKey: getColor("RUS"), value: valueQuery("RUS")},
-                RWA: { fillKey: getColor("RWA"), value: valueQuery("RWA")},
-                ESH: { fillKey: getColor("ESH"), value: valueQuery("ESH")},
-                SAU: { fillKey: getColor("SAU"), value: valueQuery("SAU")},
-                SDN: { fillKey: getColor("SDN"), value: valueQuery("SDN")},
-                SSD: { fillKey: getColor("SSD"), value: valueQuery("SSD")},
-                SEN: { fillKey: getColor("SEN"), value: valueQuery("SEN")},
-                SLB: { fillKey: getColor("SLB"), value: valueQuery("SLB")},
-                SLE: { fillKey: getColor("SLE"), value: valueQuery("SLE")},
-                SLV: { fillKey: getColor("SLV"), value: valueQuery("SLV")},
-                SOM: { fillKey: getColor("SOM"), value: valueQuery("SOM")},
-                SRB: { fillKey: getColor("SRB"), value: valueQuery("SRB")},
-                SUR: { fillKey: getColor("SUR"), value: valueQuery("SUR")},
-                SVK: { fillKey: getColor("SVK"), value: valueQuery("SVK")},
-                SVN: { fillKey: getColor("SVN"), value: valueQuery("SVN")},
-                SWE: { fillKey: getColor("SWE"), value: valueQuery("SWE")},
-                SWZ: { fillKey: getColor("SWZ"), value: valueQuery("SWZ")},
-                SYR: { fillKey: getColor("SYR"), value: valueQuery("SYR")},
-                TCD: { fillKey: getColor("TCD"), value: valueQuery("TCD")},
-                TGO: { fillKey: getColor("TGO"), value: valueQuery("TGO")},
-                THA: { fillKey: getColor("THA"), value: valueQuery("THA")},
-                TJK: { fillKey: getColor("TJK"), value: valueQuery("TJK")},
-                TKM: { fillKey: getColor("TKM"), value: valueQuery("TKM")},
-                TLS: { fillKey: getColor("TLS"), value: valueQuery("TLS")},
-                TTO: { fillKey: getColor("TTO"), value: valueQuery("TTO")},
-                TUN: { fillKey: getColor("TUN"), value: valueQuery("TUN")},
-                TUR: { fillKey: getColor("TUR"), value: valueQuery("TUR")},
-                TWN: { fillKey: getColor("TWN"), value: valueQuery("TWN")},
-                TZA: { fillKey: getColor("TZA"), value: valueQuery("TZA")},
-                UGA: { fillKey: getColor("UGA"), value: valueQuery("UGA")},
-                UKR: { fillKey: getColor("UKR"), value: valueQuery("UKR")},
-                URY: { fillKey: getColor("URY"), value: valueQuery("URY")},
-                USA: { fillKey: getColor("USA"), value: valueQuery("USA")},
-                UZB: { fillKey: getColor("UZB"), value: valueQuery("UZB")},
-                VEN: { fillKey: getColor("VEN"), value: valueQuery("VEN")},
-                VNM: { fillKey: getColor("VNM"), value: valueQuery("VNM")},
-                VUT: { fillKey: getColor("VUT"), value: valueQuery("VUT")},
-                PSE: { fillKey: getColor("PSE"), value: valueQuery("PSE")},
-                YEM: { fillKey: getColor("YEM"), value: valueQuery("YEM")},
-                ZAF: { fillKey: getColor("ZAF"), value: valueQuery("ZAF")},
-                ZMB: { fillKey: getColor("ZMB"), value: valueQuery("ZMB")},
-                ZWE: { fillKey: getColor("ZWE"), value: valueQuery("ZWE")},
+                AFG: { fillKey: getColor("AFG"), value: valueQuery("AFG", temp)},
+                AGO: { fillKey: getColor("AGO"), value: valueQuery("AGO", temp)},
+                ALB: { fillKey: getColor("ALB"), value: valueQuery("ALB", temp)},
+                ARE: { fillKey: getColor("ARE"), value: valueQuery("ARE", temp)},
+                ARG: { fillKey: getColor("ARG"), value: valueQuery("ARG", temp)},
+                ARM: { fillKey: getColor("ARM"), value: valueQuery("ARM", temp)},
+                ATA: { fillKey: getColor("ATA"), value: valueQuery("ATA", temp)},
+                AUS: { fillKey: getColor("AUS"), value: valueQuery("AUS", temp)},
+                AUT: { fillKey: getColor("AUT"), value: valueQuery("AUT", temp)},
+                AZE: { fillKey: getColor("AZE"), value: valueQuery("AZE", temp)},
+                BDI: { fillKey: getColor("BDI"), value: valueQuery("BDI", temp)},
+                BEL: { fillKey: getColor("BEL"), value: valueQuery("BEL", temp)},
+                BEN: { fillKey: getColor("BEN"), value: valueQuery("BEN", temp)},
+                BFA: { fillKey: getColor("BFA"), value: valueQuery("BFA", temp)},
+                BGD: { fillKey: getColor("BGD"), value: valueQuery("BGD", temp)},
+                BGR: { fillKey: getColor("BGR"), value: valueQuery("BGR", temp)},
+                BHS: { fillKey: getColor("BHS"), value: valueQuery("BHS", temp)},
+                BIH: { fillKey: getColor("BIH"), value: valueQuery("BIH", temp)},
+                BLR: { fillKey: getColor("BLR"), value: valueQuery("BLR", temp)},
+                BLZ: { fillKey: getColor("BLZ"), value: valueQuery("BLZ", temp)},
+                BOL: { fillKey: getColor("BOL"), value: valueQuery("BOL", temp)},
+                BRA: { fillKey: getColor("BRA"), value: valueQuery("BRA", temp)},
+                BRN: { fillKey: getColor("BRN"), value: valueQuery("BRN", temp)},
+                BTN: { fillKey: getColor("BTN"), value: valueQuery("BTN", temp)},
+                BWA: { fillKey: getColor("BWA"), value: valueQuery("BWA", temp)},
+                CAF: { fillKey: getColor("CAF"), value: valueQuery("CAF", temp)},
+                CAN: { fillKey: getColor("CAN"), value: valueQuery("CAN", temp)},
+                CHE: { fillKey: getColor("CHE"), value: valueQuery("CHE", temp)},
+                CHL: { fillKey: getColor("CHL"), value: valueQuery("CHL", temp)},
+                CHN: { fillKey: getColor("CHN"), value: valueQuery("CHN", temp)},
+                CIV: { fillKey: getColor("CIV"), value: valueQuery("CIV", temp)},
+                CMR: { fillKey: getColor("CMR"), value: valueQuery("CMR", temp)},
+                COD: { fillKey: getColor("COD"), value: valueQuery("COD", temp)},
+                COG: { fillKey: getColor("COG"), value: valueQuery("COG", temp)},
+                COL: { fillKey: getColor("COL"), value: valueQuery("COL", temp)},
+                CRI: { fillKey: getColor("CRI"), value: valueQuery("CRI", temp)},
+                CUB: { fillKey: getColor("CUB"), value: valueQuery("CUB", temp)},
+                CYP: { fillKey: getColor("CYP"), value: valueQuery("CYP", temp)},
+                CZE: { fillKey: getColor("CZE"), value: valueQuery("CZE", temp)},
+                DEU: { fillKey: getColor("DEU"), value: valueQuery("DEU", temp)},
+                DJI: { fillKey: getColor("DJI"), value: valueQuery("DJI", temp)},
+                DNK: { fillKey: getColor("DNK"), value: valueQuery("DNK", temp)},
+                DOM: { fillKey: getColor("DOM"), value: valueQuery("DOM", temp)},
+                DZA: { fillKey: getColor("DZA"), value: valueQuery("DZA", temp)},
+                ECU: { fillKey: getColor("ECU"), value: valueQuery("ECU", temp)},
+                EGY: { fillKey: getColor("EGY"), value: valueQuery("EGY", temp)},
+                ERI: { fillKey: getColor("ERI"), value: valueQuery("ERI", temp)},
+                ESP: { fillKey: getColor("ESP"), value: valueQuery("ESP", temp)},
+                EST: { fillKey: getColor("EST"), value: valueQuery("EST", temp)},
+                ETH: { fillKey: getColor("ETH"), value: valueQuery("ETH", temp)},
+                FIN: { fillKey: getColor("FIN"), value: valueQuery("FIN", temp)},
+                FJI: { fillKey: getColor("FJI"), value: valueQuery("FJI", temp)},
+                FLK: { fillKey: getColor("FLK"), value: valueQuery("FLK", temp)},
+                FRA: { fillKey: getColor("FRA"), value: valueQuery("FRA", temp)},
+                GUF: { fillKey: getColor("GUF"), value: valueQuery("GUF", temp)},
+                GAB: { fillKey: getColor("GAB"), value: valueQuery("GAB", temp)},
+                GBR: { fillKey: getColor("GBR"), value: valueQuery("GBR", temp)},
+                GEO: { fillKey: getColor("GEO"), value: valueQuery("GEO", temp)},
+                GHA: { fillKey: getColor("GHA"), value: valueQuery("GHA", temp)},
+                GIN: { fillKey: getColor("GIN"), value: valueQuery("GIN", temp)},
+                GMB: { fillKey: getColor("GMB"), value: valueQuery("GMB", temp)},
+                GNB: { fillKey: getColor("GNB"), value: valueQuery("GNB", temp)},
+                GNQ: { fillKey: getColor("GNQ"), value: valueQuery("GNQ", temp)},
+                GRC: { fillKey: getColor("GRC"), value: valueQuery("GRC", temp)},
+                GRL: { fillKey: getColor("GRL"), value: valueQuery("GRL", temp)},
+                GTM: { fillKey: getColor("GTM"), value: valueQuery("GTM", temp)},
+                GUY: { fillKey: getColor("GUY"), value: valueQuery("GUY", temp)},
+                HND: { fillKey: getColor("HND"), value: valueQuery("HND", temp)},
+                HRV: { fillKey: getColor("HRV"), value: valueQuery("HRV", temp)},
+                HTI: { fillKey: getColor("HTI"), value: valueQuery("HTI", temp)},
+                HUN: { fillKey: getColor("HUN"), value: valueQuery("HUN", temp)},
+                IDN: { fillKey: getColor("IDN"), value: valueQuery("IDN", temp)},
+                IND: { fillKey: getColor("IND"), value: valueQuery("IND", temp)},
+                IRL: { fillKey: getColor("IRL"), value: valueQuery("IRL", temp)},
+                IRN: { fillKey: getColor("IRN"), value: valueQuery("IRN", temp)},
+                IRQ: { fillKey: getColor("IRQ"), value: valueQuery("IRQ", temp)},
+                ISL: { fillKey: getColor("ISL"), value: valueQuery("ISL", temp)},
+                ISR: { fillKey: getColor("ISR"), value: valueQuery("ISR", temp)},
+                ITA: { fillKey: getColor("ITA"), value: valueQuery("ITA", temp)},
+                JAM: { fillKey: getColor("JAM"), value: valueQuery("JAM", temp)},
+                JOR: { fillKey: getColor("JOR"), value: valueQuery("JOR", temp)},
+                JPN: { fillKey: getColor("JPN"), value: valueQuery("JPN", temp)},
+                KAZ: { fillKey: getColor("KAZ"), value: valueQuery("KAZ", temp)},
+                KEN: { fillKey: getColor("KEN"), value: valueQuery("KEN", temp)},
+                KGZ: { fillKey: getColor("KGZ"), value: valueQuery("KGZ", temp)},
+                KHM: { fillKey: getColor("KHM"), value: valueQuery("KHM", temp)},
+                KOR: { fillKey: getColor("KOR"), value: valueQuery("KOR", temp)},
+                KWT: { fillKey: getColor("KWT"), value: valueQuery("KWT", temp)},
+                LAO: { fillKey: getColor("LAO"), value: valueQuery("LAO", temp)},
+                LBN: { fillKey: getColor("LBN"), value: valueQuery("LBN", temp)},
+                LBR: { fillKey: getColor("LBR"), value: valueQuery("LBR", temp)},
+                LBY: { fillKey: getColor("LBY"), value: valueQuery("LBY", temp)},
+                LKA: { fillKey: getColor("LKA"), value: valueQuery("LKA", temp)},
+                LSO: { fillKey: getColor("LSO"), value: valueQuery("LSO", temp)},
+                LTU: { fillKey: getColor("LTU"), value: valueQuery("LTU", temp)},
+                LUX: { fillKey: getColor("LUX"), value: valueQuery("LUX", temp)},
+                LVA: { fillKey: getColor("LVA"), value: valueQuery("LVA", temp)},
+                MAR: { fillKey: getColor("MAR"), value: valueQuery("MAR", temp)},
+                MDA: { fillKey: getColor("MDA"), value: valueQuery("MDA", temp)},
+                MDG: { fillKey: getColor("MDG"), value: valueQuery("MDG", temp)},
+                MEX: { fillKey: getColor("MEX"), value: valueQuery("MEX", temp)},
+                MKD: { fillKey: getColor("MKD"), value: valueQuery("MKD", temp)},
+                MLI: { fillKey: getColor("MLI"), value: valueQuery("MLI", temp)},
+                MMR: { fillKey: getColor("MMR"), value: valueQuery("MMR", temp)},
+                MNE: { fillKey: getColor("MNE"), value: valueQuery("MNE", temp)},
+                MNG: { fillKey: getColor("MNG"), value: valueQuery("MNG", temp)},
+                MOZ: { fillKey: getColor("MOZ"), value: valueQuery("MOZ", temp)},
+                MRT: { fillKey: getColor("MRT"), value: valueQuery("MRT", temp)},
+                MWI: { fillKey: getColor("MWI"), value: valueQuery("MWI", temp)},
+                MYS: { fillKey: getColor("MYS"), value: valueQuery("MYS", temp)},
+                NAM: { fillKey: getColor("NAM"), value: valueQuery("NAM", temp)},
+                NCL: { fillKey: getColor("NCL"), value: valueQuery("NCL", temp)},
+                NER: { fillKey: getColor("NER"), value: valueQuery("NER", temp)},
+                NGA: { fillKey: getColor("NGA"), value: valueQuery("NGA", temp)},
+                NIC: { fillKey: getColor("NIC"), value: valueQuery("NIC", temp)},
+                NLD: { fillKey: getColor("NLD"), value: valueQuery("NLD", temp)},
+                NOR: { fillKey: getColor("NOR"), value: valueQuery("NOR", temp)},
+                NPL: { fillKey: getColor("NPL"), value: valueQuery("NPL", temp)},
+                NZL: { fillKey: getColor("NZL"), value: valueQuery("NZL", temp)},
+                OMN: { fillKey: getColor("OMN"), value: valueQuery("OMN", temp)},
+                PAK: { fillKey: getColor("PAK"), value: valueQuery("PAK", temp)},
+                PAN: { fillKey: getColor("PAN"), value: valueQuery("PAN", temp)},
+                PER: { fillKey: getColor("PER"), value: valueQuery("PER", temp)},
+                PHL: { fillKey: getColor("PHL"), value: valueQuery("PHL", temp)},
+                PNG: { fillKey: getColor("PNG"), value: valueQuery("PNG", temp)},
+                POL: { fillKey: getColor("POL"), value: valueQuery("POL", temp)},
+                PRI: { fillKey: getColor("PRI"), value: valueQuery("PRI", temp)},
+                PRK: { fillKey: getColor("PRK"), value: valueQuery("PRK", temp)},
+                PRT: { fillKey: getColor("PRT"), value: valueQuery("PRT", temp)},
+                PRY: { fillKey: getColor("PRY"), value: valueQuery("PRY", temp)},
+                QAT: { fillKey: getColor("QAT"), value: valueQuery("QAT", temp)},
+                ROU: { fillKey: getColor("ROU"), value: valueQuery("ROU", temp)},
+                RUS: { fillKey: getColor("RUS"), value: valueQuery("RUS", temp)},
+                RWA: { fillKey: getColor("RWA"), value: valueQuery("RWA", temp)},
+                ESH: { fillKey: getColor("ESH"), value: valueQuery("ESH", temp)},
+                SAU: { fillKey: getColor("SAU"), value: valueQuery("SAU", temp)},
+                SDN: { fillKey: getColor("SDN"), value: valueQuery("SDN", temp)},
+                SSD: { fillKey: getColor("SSD"), value: valueQuery("SSD", temp)},
+                SEN: { fillKey: getColor("SEN"), value: valueQuery("SEN", temp)},
+                SLB: { fillKey: getColor("SLB"), value: valueQuery("SLB", temp)},
+                SLE: { fillKey: getColor("SLE"), value: valueQuery("SLE", temp)},
+                SLV: { fillKey: getColor("SLV"), value: valueQuery("SLV", temp)},
+                SOM: { fillKey: getColor("SOM"), value: valueQuery("SOM", temp)},
+                SRB: { fillKey: getColor("SRB"), value: valueQuery("SRB", temp)},
+                SUR: { fillKey: getColor("SUR"), value: valueQuery("SUR", temp)},
+                SVK: { fillKey: getColor("SVK"), value: valueQuery("SVK", temp)},
+                SVN: { fillKey: getColor("SVN"), value: valueQuery("SVN", temp)},
+                SWE: { fillKey: getColor("SWE"), value: valueQuery("SWE", temp)},
+                SWZ: { fillKey: getColor("SWZ"), value: valueQuery("SWZ", temp)},
+                SYR: { fillKey: getColor("SYR"), value: valueQuery("SYR", temp)},
+                TCD: { fillKey: getColor("TCD"), value: valueQuery("TCD", temp)},
+                TGO: { fillKey: getColor("TGO"), value: valueQuery("TGO", temp)},
+                THA: { fillKey: getColor("THA"), value: valueQuery("THA", temp)},
+                TJK: { fillKey: getColor("TJK"), value: valueQuery("TJK", temp)},
+                TKM: { fillKey: getColor("TKM"), value: valueQuery("TKM", temp)},
+                TLS: { fillKey: getColor("TLS"), value: valueQuery("TLS", temp)},
+                TTO: { fillKey: getColor("TTO"), value: valueQuery("TTO", temp)},
+                TUN: { fillKey: getColor("TUN"), value: valueQuery("TUN", temp)},
+                TUR: { fillKey: getColor("TUR"), value: valueQuery("TUR", temp)},
+                TWN: { fillKey: getColor("TWN"), value: valueQuery("TWN", temp)},
+                TZA: { fillKey: getColor("TZA"), value: valueQuery("TZA", temp)},
+                UGA: { fillKey: getColor("UGA"), value: valueQuery("UGA", temp)},
+                UKR: { fillKey: getColor("UKR"), value: valueQuery("UKR", temp)},
+                URY: { fillKey: getColor("URY"), value: valueQuery("URY", temp)},
+                USA: { fillKey: getColor("USA"), value: valueQuery("USA", temp)},
+                UZB: { fillKey: getColor("UZB"), value: valueQuery("UZB", temp)},
+                VEN: { fillKey: getColor("VEN"), value: valueQuery("VEN", temp)},
+                VNM: { fillKey: getColor("VNM"), value: valueQuery("VNM", temp)},
+                VUT: { fillKey: getColor("VUT"), value: valueQuery("VUT", temp)},
+                PSE: { fillKey: getColor("PSE"), value: valueQuery("PSE", temp)},
+                YEM: { fillKey: getColor("YEM"), value: valueQuery("YEM", temp)},
+                ZAF: { fillKey: getColor("ZAF"), value: valueQuery("ZAF", temp)},
+                ZMB: { fillKey: getColor("ZMB"), value: valueQuery("ZMB", temp)},
+                ZWE: { fillKey: getColor("ZWE"), value: valueQuery("ZWE", temp)},
               "-99": { fillKey: "defaultFill", value: "unknown"}
             },
 
@@ -346,48 +412,6 @@
         window.addEventListener("resize", function() {
             map.resize();
         });
-        </script>
-        
-                <!-- Firestore JS Library -->
-        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
-
-          <!-- The core Firebase JS SDK is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
-
-        <!-- TODO: Add SDKs for Firebase products that you want to use
-             https://firebase.google.com/docs/web/setup#available-libraries -->
-        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
-
-        <script>
-          // Your web app's Firebase configuration
-          // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-          var firebaseConfig = {
-            apiKey: "AIzaSyC2VqB8gWmvD91IcLT8UGhiI-rKwJZ5RZY",
-            authDomain: "sentry-tech.firebaseapp.com",
-            projectId: "sentry-tech",
-            storageBucket: "sentry-tech.appspot.com",
-            messagingSenderId: "823119172223",
-            appId: "1:823119172223:web:1ac3b49c164b8520b1654a",
-            measurementId: "G-P1RK5V842S"
-          };
-
-          const firebase = require("firebase");
-          // Required for side-effects
-          require("firebase/firestore");
-
-          // Initialize Firebase
-          firebase.initializeApp(firebaseConfig);
-          firebase.analytics();
-
-          // Initialize Cloud Firestore through Firebase
-        firebase.initializeApp({
-          apiKey: 'AIzaSyC2VqB8gWmvD91IcLT8UGhiI-rKwJZ5RZY',
-          authDomain: 'sentry-tech.firebaseapp.com',
-          projectId: 'sentry-tech'
-        });
-
-          var db = firebase.firestore();
-
         </script>
     </body>
 </html>
