@@ -1,3 +1,6 @@
 {
-    "liveServer.settings.port": 5502
+    "python.pythonPath": "C:\\tools\\Anaconda3\\python.exe",
+    "extensions.confirmedUriHandlerExtensionIds": [],
+    "editor.tabSize": 4,
+    "editor.detectIndentation": true
 }
