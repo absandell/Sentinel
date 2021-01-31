@@ -10,7 +10,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css" >
-        
+
         <script type="text/javascript" src="d3.v2.min.js"></script>
 
         <script type="text/javascript">
@@ -19,7 +19,7 @@
             d3.csv("data.csv", function(data) {
                 //Add data to the graph and call enter.
                 var dataEnter = d3.select("body").selectAll("p").data(data).enter();
-   
+
                 dataEnter.append("span").html(function(d) {
                     return d["Site Type"] + "," + d["Media Type"] + "," + d["Data 1"] + "," + d["Data 2"]
                         + "," + d["Data 3"] + "</br>";
@@ -30,7 +30,7 @@
 </script>
 
         <script src="/script.js" defer></script>
-        
+
                        <!-- Firestore JS Library -->
         <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
 
@@ -68,10 +68,6 @@
           authDomain: 'sentry-tech.firebaseapp.com',
           projectId: 'sentry-tech'
         });
-            
-            
-          const csvString = document.getElementById(id); // read csv string
-          var db = readCSV(csvString);
 
 
         </script>
@@ -79,7 +75,7 @@
     </head>
 
     <body>
-        
+
         <div id = "title">/ Sentinel /</div>
             <div class="navbar">
                 <a href = "index.html">Home</a>
@@ -96,19 +92,20 @@
                         <a href="environmenalsustainability.html">Environmental Sustainability</a>
                         <a href="genderinequality.html">Gender Inequality</a>
                     </div>
-                </div> 
+                </div>
+                <input type="file" accept=".csv" onchange="uploadCSV(this)">
                 <h2>Home</h2>
             </div>
-            
-        
+
+
         <div class = "map-wrapper">
             <div id="map" style="position: relative; margin-top: 0px; width: auto; height:auto;"></div>
         </div>
-        
+
         <div class = "learnmore">
             <a href = "https://www.charitynavigator.org/index.cfm?bay=search.map">Want to Learn How to Help? Start Your Search Here!</a>
         </div>
-        
+
         <script>
             function myFunction() {
                 document.getElementById("myDropdown").classList.toggle("show");
@@ -127,40 +124,120 @@
 
 
         <script>
-            
-            // Converts CSV -> JSON -> stored in new Firestore database and returns list of JSON objects
+            // Important global variables
+            var reader;  // FileReader
+            const db = firebase.firestore();  // Firestore database
+
+            /**
+            * Imports a .csv file into the
+            * @summary If the description is long, write your summary here. Otherwise, feel free to remove this.
+            * @param {ParamDataTypeHere} parameterNameHere - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
+            * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
+            */
             function readCSV(csvString) {
-              var db = firebase.firestore();
-              db.collection('countries').doc('placeholder');
+                db.collection('countries').doc('placeholder');
 
-              var dataJson = Papa.parse(csv, {
-                fastMode: true,
-                header : true,
-                dynamicTyping : true,
-                skipEmptyLines : true
-              });
+                var dataJson = Papa.parse(csv, {
+                    fastMode: true,
+                    header : true,
+                    dynamicTyping : true,
+                    skipEmptyLines : true
+                });
 
-              fieldNames = data_json.fields;  // first field is always country
-              countryName = fieldNames[0];
-              dataJson.forEach(function (obj) {
-                  delete obj[countryName];
-                  db.collection('countries').add(obj);
-              })
-
-              return db;
+                fieldNames = data_json.fields;  // first field is always country
+                countryName = fieldNames[0];
+                dataJson.forEach(function (obj) {
+                    delete obj[countryName];
+                    db.collection('countries').doc(countryName).set(obj);
+                });
             }
 
+            /**
+            * Event handler when user uploads a new file
+            * @param {filePath} FileList - List of File objects returned by the file-type input element; only the first element (File) will be used.
+            * @return {null}
+            */
+            function uploadCSV(filePath) {
+                // Check for necessary API compatilibilty
+                if(window.File && window.FileReader && window.FileList && window.Blob) { 
+                    console.log('All neceaary APIs are supported for file reading.');
+                } else {
+                    throw new Error('Not all nnecessary APIs for file reading are present.'); 
+                }
+
+                // if(filePath.files && filePath[0])
+                reader = new FileReader();
+
+                var firstFile = filePath.files[0];
+                alert("file name: " + firstFile.name);
+                alert("file type: " + firstFile.type);
+                reader.readAsText(firstFile, 'UTF-8');
+
+                reader.onload = function (event) {
+                    const csvString = event.target.result;
+                    alert('csv as string:\n\n' + csvString);
+                    // db = readCSV(csvString);
+                    // alert('db type: ' + typeof(db));
+
+                    // DEBUGGING DATABASE
+                    // adding default collection for testing purposes
+
+                    alert("Database: " + db);
+                    alert('db type: ' + typeof(db));
+                    var hackathonRef = db.collection('hackathon');
+                    alert(hackathonRef);
+                    alert(typeof(hackathonRef));
+
+                    hackathonRef.doc('sentry').set({
+                        contests : ['Google', 'Citi Bank'],
+                        type : 'interactive website',
+                        teamSize : 4
+                    });
+
+                    alert('Set a new document to collection.');
+
+                    hackathonRef.doc('sentry').get()
+                    .then(function (doc) {
+                        if(doc.exists) {
+                            alert('db test data:\n\n' + doc.data());
+                        } else {
+                            alert('Error: no such document!');
+                        }
+                    })
+                    .catch(function (err) {
+                        alert('Error getting document: ' + err);
+                    });
+                }
+            }
+
+            /**
+            * Gets numerical value for a specified country under a specific feature (CSV column)
+            * @param {name} string - Name of country.
+            * @param {feature} string - Name of feature, which must exactly match one of the column names in current CSV file.
+            * @return {float} Retrieved numerical value from Firestore database, which is based off current CSV file. 
+            */
             function valueQuery(name, feature){
                 // Not sure if db inside <body> is global or reachable here; if not, call `var db = readCSV(csvString)` first here. 
-                var countryRef = db.collection('countries').doc("code");
+                var countryRef = db.collection('countries').doc(name);
                 countryRef.get()
                 .then(function(doc) {
-                    return doc.data()["total"];
+                    if(doc.exists) {
+                        var data = doc.data();  // JSON object for choosen country
+                        alert('db test data:\n\n' + data);
+                        return data[feature];
+                    } else {
+                        alert('Error: no such document!');
+                    }
                 })
                 .catch(function (err) { console.log("Error: " + err); });
                 // return 10
             }
-            
+
+            /**
+            * Converts integer to lowercase English word version, which is then used for map coloring configurations.
+            * @param {name} string - Name of country.
+            * @return {string} Lowercase English word equivalent of integer.
+            */
             function getColor(name) {
                 var geoVal = valueQuery(name);
                 switch(geoVal) {
@@ -196,14 +273,13 @@
                         break;
                     default:
                         return "defaultFill"
-                        break;   
+                        break;
                 }
-                
-                
+
             }
             var temp = "test"
 
-          var map = new Datamap({
+        var map = new Datamap({
             element: document.getElementById("map"),
             responsive: true,
             fills: {
