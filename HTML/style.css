@@ -303,3 +303,53 @@ h2{
     font-weight: bold;
     
 }
+
+.wholepage{
+    height:100%;
+    width:100%;
+    background-color:grey;
+}
+.contactpage{
+    margin-top:10px;
+    margin-left: 10px;
+    background-color: #333;
+    float:left;
+    position:relative;
+    width:19.6vw;
+    height:10.6vw;
+}
+.contacttiles{
+    text-decoration:none;
+    font-size:30px;
+    
+    margin-top: 10px;
+    color:white;
+    position:absolute;
+    left:10px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+    overflow: hidden;
+    box-shadow:0 4px 20px rgb(16, 199, 132);
+    border-radius:2px;
+}
+
+.contacttiles a {
+    text-align:center;
+    position:relative;
+    color:white;
+    text-decoration:none;
+}
+
+.contacttiles .textBox{
+    font-family: 'Abel', sans-serif;
+    font-weight: 200;
+    text-align:center;
+    position: relative;
+    left: 0;
+    right: 0;
+    font-size:30px;
+    text-decoration: none;
+    color:Black;
+    background: rgb(16, 199, 132);
+}
