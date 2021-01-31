@@ -409,48 +409,6 @@
         window.addEventListener("resize", function() {
             map.resize();
         });
-        </script>
-        
-                <!-- Firestore JS Library -->
-        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
-
-          <!-- The core Firebase JS SDK is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
-
-        <!-- TODO: Add SDKs for Firebase products that you want to use
-             https://firebase.google.com/docs/web/setup#available-libraries -->
-        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
-
-        <script>
-          // Your web app's Firebase configuration
-          // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-          var firebaseConfig = {
-            apiKey: "AIzaSyC2VqB8gWmvD91IcLT8UGhiI-rKwJZ5RZY",
-            authDomain: "sentry-tech.firebaseapp.com",
-            projectId: "sentry-tech",
-            storageBucket: "sentry-tech.appspot.com",
-            messagingSenderId: "823119172223",
-            appId: "1:823119172223:web:1ac3b49c164b8520b1654a",
-            measurementId: "G-P1RK5V842S"
-          };
-
-          const firebase = require("firebase");
-          // Required for side-effects
-          require("firebase/firestore");
-
-          // Initialize Firebase
-          firebase.initializeApp(firebaseConfig);
-          firebase.analytics();
-
-          // Initialize Cloud Firestore through Firebase
-        firebase.initializeApp({
-          apiKey: 'AIzaSyC2VqB8gWmvD91IcLT8UGhiI-rKwJZ5RZY',
-          authDomain: 'sentry-tech.firebaseapp.com',
-          projectId: 'sentry-tech'
-        });
-
-          var db = firebase.firestore();
-
-        </script>
+        </script> 
     </body>
 </html>
