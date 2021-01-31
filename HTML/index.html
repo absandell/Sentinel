@@ -79,6 +79,7 @@
             <div class="navbar">
                 <a href = "index.html">Home</a>
                 <a href = "about.html">About</a>
+                <a href = "contact.html">Contact</a>
                 <div class="dropdown">
                     <button class="dropbtn" onclick="myFunction()">Dropdown</button>
                     <div class="dropdown-content" id="myDropdown">
@@ -92,7 +93,8 @@
                         <a href="genderinequality.html">Gender Inequality</a>
                     </div>
                 </div>
-                <input type="file" accept=".csv" onchange="uploadCSV(this)">
+                <div class = "filebutton"><input type="file" accept=".csv" onchange="uploadCSV(this)"></div>
+                
                 <h2>Home</h2>
             </div>
 
@@ -171,8 +173,8 @@
             responsive: true,
             fills: {
                 defaultFill: "grey",
-                zero:"#fffff1",
-                one:"#fff5cc",
+                zero:"#cfc7b0",
+                one:"#d9c589",
                 two:"#ffeb99",
                 three:"#ffdb4d",
                 four:"#e6b800",

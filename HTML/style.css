@@ -45,6 +45,10 @@
   margin: 0;
 }
 
+.filebutton{
+    text-align:center;
+}
+
 .navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
   background-color: rgb(16, 199, 132);
 }

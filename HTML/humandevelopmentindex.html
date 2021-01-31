@@ -71,6 +71,7 @@
             <div class="navbar">
                 <a href = "index.html">Home</a>
                 <a href = "about.html">About</a>
+                <a href = "contact.html">Contact</a>
                 <div class="dropdown">
                     <button class="dropbtn" onclick="myFunction()">Dropdown</button>
                     <div class="dropdown-content" id="myDropdown">
@@ -84,6 +85,7 @@
                         <a href="genderinequality.html">Gender Inequality</a>
                     </div>
                 </div>
+                <div class = "filebutton"><input type="file" accept=".csv" onchange="uploadCSV(this)"></div>
                 <h2>Human Development Index</h2>
             </div>
             
@@ -380,7 +382,7 @@
             geographyConfig: {
                 popupTemplate: function(geo, data) {
                     return ['<div class="hoverinfo"><strong>',
-                            'Number of things in ' + geo.properties.name,
+                            'Human Development Index in ' + geo.properties.name,
                             ': ' + data.value,
                             '</strong></div>'].join('');
                     }
