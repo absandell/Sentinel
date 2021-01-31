@@ -6,6 +6,7 @@
         </script>
         <script src="https://datamaps.github.io/scripts/0.5.0/datamaps.world.min.js">
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css" >
@@ -28,7 +29,7 @@
 
 </script>
 
-        <script src="script.js" defer></script>
+        <script src="/script.js" defer></script>
 
     </head>
 
@@ -39,9 +40,7 @@
                 <a href = "index.html">Home</a>
                 <a href = "#">About</a>
                 <div class="dropdown">
-                    <button class="dropbtn" onclick="myFunction()">Dropdown
-                        <i class="fa fa-caret-down"></i>
-                    </button>
+                    <button class="dropbtn" onclick="myFunction()">Dropdown</button>
                     <div class="dropdown-content" id="myDropdown">
                         <a href="povertyindex.html">Poverty Index</a>
                         <a href="humanfreedomindex.html">Human Freedom Index</a>
@@ -154,6 +153,7 @@
                 
                 
             }
+            var temp = "test"
 
           var map = new Datamap({
             element: document.getElementById("map"),
@@ -172,7 +172,7 @@
                 ten:"#330a00"
             },
             data: {
-                AFG: { fillKey: getColor("AFG"), value: valueQuery("AFG")},
+                AFG: { fillKey: getColor("AFG"), value: valueQuery("AFG", temp)},
                 AGO: { fillKey: getColor("AGO"), value: valueQuery("AGO")},
                 ALB: { fillKey: getColor("ALB"), value: valueQuery("ALB")},
                 ARE: { fillKey: getColor("ARE"), value: valueQuery("ARE")},
