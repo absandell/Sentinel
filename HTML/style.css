@@ -95,6 +95,20 @@ h2{
     
 }
 
+.box3 ul li{
+  list-style: none;
+}
+
+.box3 ul li a{
+  list-style: none;
+  text-decoration: none;
+  align-items: center;
+}
+
+.box3 ul li:hover{
+  background: rgb(16, 199, 132);
+}
+
 
 .box{
   margin-top: 25px;
@@ -123,6 +137,44 @@ h2{
   position: relative;
   font-size: 30px;
   background: rgba(16, 199, 132);
+  border-radius:25px;
+  padding:20px;
+  text-align:center;
+  color:rgb(0, 0, 0);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.box3{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+    margin-top: 25px;
+  margin-left: 34%;
+  margin-right: auto;
+  width: 400px;
+  height: 350;
+  position: relative;
+  font-size: 30px;
+  background: rgba(16, 199, 132);
+  border-radius:25px;
+  padding:20px;
+  text-align:center;
+  color:rgb(0, 0, 0);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.box4{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+    margin-top: 25px;
+  margin-left: 10%;
+  margin-right: auto;
+  width: 80%;
+  height: 350;
+  position: relative;
+  font-size: 50px;
+  background: none;
   border-radius:25px;
   padding:20px;
   text-align:center;
