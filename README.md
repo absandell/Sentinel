@@ -1,5 +1,6 @@
 # Sentinel: The Watchtower of Global Issues
 
+![Optional Text](../main/sentinel.png)
 # [Demo Video](https://www.youtube.com/watch?v=kjyfBYvqjAc&t=100s&ab_channel=%24and)
 ## Available at [My Website](http://sentinel.andrewsandell.com)
 
