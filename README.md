@@ -1,6 +1,6 @@
 # Sentinel: The Watchtower of Global Issues
 
-#[Demo Video](https://www.youtube.com/watch?v=kjyfBYvqjAc&t=100s&ab_channel=%24and)
+# [Demo Video](https://www.youtube.com/watch?v=kjyfBYvqjAc&t=100s&ab_channel=%24and)
 ## Available at [My Website](http://sentinel.andrewsandell.com)
 
 Sentinel is a website that has compiled data from a number of academic sources to visualize an interactive heatmap of the globe. This allows the user to interact with global issues in a way they never have before.
